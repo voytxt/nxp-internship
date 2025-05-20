@@ -38,9 +38,11 @@ int main(void)
 
     PRINTF("hello world.\r\n");
 
-    while (1)
-    {
-        ch = GETCHAR();
-        PUTCHAR(ch);
+    while (1) {
+//    	PUTCHAR(48 + GPIO_PinRead(BOARD_ENC_SW_GPIO, BOARD_ENC_SW_PIN));
+        int on = GPIO_PinRead(BOARD_SW1_EXT_GPIO, BOARD_SW1_EXT_PIN);
+        GPIO_PinWrite(BOARD_LED_G_GPIO, BOARD_LED_G_PIN, on);
+//      ch = GETCHAR();
+//      PUTCHAR(ch);
     }
 }
