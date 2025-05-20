@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding= "UTF-8" ?>
-<configuration name="MK64FN1M0xxx12" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_15 http://mcuxpresso.nxp.com/XSD/mex_configuration_15.xsd" uuid="381e1404-4fee-42dd-9840-e4b8e90dbe17" version="15" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_15" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<configuration name="MK64FN1M0xxx12" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_17 http://mcuxpresso.nxp.com/XSD/mex_configuration_17.xsd" uuid="381e1404-4fee-42dd-9840-e4b8e90dbe17" version="17" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_17" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
    <common>
       <processor>MK64FN1M0xxx12</processor>
       <package>MK64FN1M0VLL12</package>
@@ -12,13 +12,12 @@
    </common>
    <preferences>
       <validate_boot_init_only>true</validate_boot_init_only>
-      <generate_extended_information>false</generate_extended_information>
       <generate_code_modified_registers_only>false</generate_code_modified_registers_only>
       <update_include_paths>true</update_include_paths>
       <generate_registers_defines>false</generate_registers_defines>
    </preferences>
    <tools>
-      <pins name="Pins" version="15.0" enabled="true" update_project_code="true">
+      <pins name="Pins" version="17.0" enabled="true" update_project_code="true">
          <generated_project_files>
             <file path="board/pin_mux.c" update_enabled="true"/>
             <file path="board/pin_mux.h" update_enabled="true"/>
@@ -526,12 +525,6 @@
                   <pin peripheral="OSC" signal="EXTAL0" pin_num="50" pin_signal="EXTAL0/PTA18/FTM0_FLT2/FTM_CLKIN0">
                      <pin_features>
                         <pin_feature name="identifier" value="EXTAL0"/>
-                        <pin_feature name="slew_rate" value="no_init"/>
-                        <pin_feature name="open_drain" value="no_init"/>
-                        <pin_feature name="drive_strength" value="no_init"/>
-                        <pin_feature name="pull_select" value="no_init"/>
-                        <pin_feature name="pull_enable" value="no_init"/>
-                        <pin_feature name="passive_filter" value="no_init"/>
                      </pin_features>
                   </pin>
                   <pin peripheral="RTC" signal="EXTAL32" pin_num="29" pin_signal="EXTAL32"/>
@@ -871,7 +864,7 @@
             </function>
          </functions_list>
       </pins>
-      <clocks name="Clocks" version="13.0" enabled="true" update_project_code="true">
+      <clocks name="Clocks" version="15.0" enabled="true" update_project_code="true">
          <generated_project_files>
             <file path="board/clock_config.c" update_enabled="true"/>
             <file path="board/clock_config.h" update_enabled="true"/>
@@ -1010,7 +1003,7 @@
          </dcdx_profile>
          <dcdx_configurations/>
       </dcdx>
-      <periphs name="Peripherals" version="14.0" enabled="true" update_project_code="true">
+      <periphs name="Peripherals" version="15.0" enabled="true" update_project_code="true">
          <dependencies>
             <dependency resourceType="SWComponent" resourceId="platform.drivers.gpio" description="GPIO Driver is not found in the toolchain/IDE project. The project will not compile!" problem_level="2" source="Peripherals">
                <feature name="enabled" evaluation="equal">
@@ -1032,16 +1025,6 @@
                   <data type="Version">2.0.5</data>
                </feature>
             </dependency>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.rtc" description="RTC Driver is not found in the toolchain/IDE project. The project will not compile!" problem_level="2" source="Peripherals">
-               <feature name="enabled" evaluation="equal">
-                  <data type="Boolean">true</data>
-               </feature>
-            </dependency>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.rtc" description="An unsupported version of the RTC Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. The project might not compile correctly." problem_level="1" source="Peripherals">
-               <feature name="version" evaluation="equivalent">
-                  <data type="Version">2.2.0</data>
-               </feature>
-            </dependency>
             <dependency resourceType="SWComponent" resourceId="platform.drivers.pit" description="PIT Driver is not found in the toolchain/IDE project. The project will not compile!" problem_level="2" source="Peripherals">
                <feature name="enabled" evaluation="equal">
                   <data type="Boolean">true</data>
@@ -1052,14 +1035,14 @@
                   <data type="Version" maxValue="2.0.9">2.0.3</data>
                </feature>
             </dependency>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.adc16" description="ADC16 Driver is not found in the toolchain/IDE project. The project will not compile!" problem_level="2" source="Peripherals">
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.rtc" description="RTC Driver is not found in the toolchain/IDE project. The project will not compile!" problem_level="2" source="Peripherals">
                <feature name="enabled" evaluation="equal">
                   <data type="Boolean">true</data>
                </feature>
             </dependency>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.adc16" description="An unsupported version of the ADC16 Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. The project might not compile correctly." problem_level="1" source="Peripherals">
-               <feature name="version" evaluation="greaterOrEqual">
-                  <data type="Version" maxValue="2.3.9">2.2.0</data>
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.rtc" description="An unsupported version of the RTC Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. The project might not compile correctly." problem_level="1" source="Peripherals">
+               <feature name="version" evaluation="equivalent">
+                  <data type="Version">2.2.0</data>
                </feature>
             </dependency>
             <dependency resourceType="SWComponent" resourceId="platform.drivers.uart" description="UART Driver is not found in the toolchain/IDE project. The project will not compile!" problem_level="2" source="Peripherals">
@@ -1070,6 +1053,16 @@
             <dependency resourceType="SWComponent" resourceId="platform.drivers.uart" description="An unsupported version of the UART Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. The project might not compile correctly." problem_level="1" source="Peripherals">
                <feature name="version" evaluation="equivalent">
                   <data type="Version">2.5.1</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.adc16" description="ADC16 Driver is not found in the toolchain/IDE project. The project will not compile!" problem_level="2" source="Peripherals">
+               <feature name="enabled" evaluation="equal">
+                  <data type="Boolean">true</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.adc16" description="An unsupported version of the ADC16 Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. The project might not compile correctly." problem_level="1" source="Peripherals">
+               <feature name="version" evaluation="greaterOrEqual">
+                  <data type="Version" maxValue="2.3.9">2.2.0</data>
                </feature>
             </dependency>
             <dependency resourceType="Tool" resourceId="Pins" description="The Pins tool is required by the Peripherals tool, but it is disabled." problem_level="2" source="Peripherals">
