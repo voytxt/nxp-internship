@@ -18,9 +18,9 @@ pin_labels:
 - {pin_num: '91', pin_signal: PTC17/UART3_TX/ENET0_1588_TMR1/FB_CS4_b/FB_TSIZ0/FB_BE31_24_BLS7_0_b, label: 'J1[4]', identifier: TMR_1588_1}
 - {pin_num: '57', pin_signal: PTB9/SPI1_PCS1/UART3_CTS_b/FB_AD20, label: 'J1[6]'}
 - {pin_num: '35', pin_signal: PTA1/UART0_RX/FTM0_CH6/JTAG_TDI/EZP_DI, label: 'J1[8]'}
-- {pin_num: '69', pin_signal: PTB23/SPI2_SIN/SPI0_PCS5/FB_AD28, label: 'J1[10]', identifier: LED_G}
+- {pin_num: '69', pin_signal: PTB23/SPI2_SIN/SPI0_PCS5/FB_AD28, label: 'J1[10]', identifier: LED_G;LED_B}
 - {pin_num: '36', pin_signal: PTA2/UART0_TX/FTM0_CH7/JTAG_TDO/TRACE_SWO/EZP_DO, label: 'J1[12]/J9[6]/TRACE_SWO'}
-- {pin_num: '72', pin_signal: ADC0_SE4b/CMP1_IN0/PTC2/SPI0_PCS2/UART1_CTS_b/FTM0_CH1/FB_AD12/I2S0_TX_FS, label: 'J1[14]', identifier: LED_B}
+- {pin_num: '72', pin_signal: ADC0_SE4b/CMP1_IN0/PTC2/SPI0_PCS2/UART1_CTS_b/FTM0_CH1/FB_AD12/I2S0_TX_FS, label: 'J1[14]', identifier: LED_B;LED_G}
 - {pin_num: '73', pin_signal: CMP1_IN1/PTC3/LLWU_P7/SPI0_PCS1/UART1_RX/FTM0_CH2/CLKOUT/I2S0_TX_BCLK, label: 'J1[16]', identifier: LED_R}
 - {pin_num: '64', pin_signal: PTB18/CAN0_TX/FTM2_CH0/I2S0_TX_BCLK/FB_AD15/FTM2_QD_PHA, label: 'J1[1]', identifier: BT_S}
 - {pin_num: '65', pin_signal: PTB19/CAN0_RX/FTM2_CH1/I2S0_TX_FS/FB_OE_b/FTM2_QD_PHB, label: 'J1[3]'}
@@ -156,9 +156,9 @@ BOARD_InitPins:
   - {pin_num: '79', peripheral: GPIOC, signal: 'GPIO, 7', pin_signal: CMP0_IN1/PTC7/SPI0_SIN/USB_SOF_OUT/I2S0_RX_FS/FB_AD8, direction: INPUT, pull_select: up, pull_enable: enable}
   - {pin_num: '77', peripheral: GPIOC, signal: 'GPIO, 5', pin_signal: PTC5/LLWU_P9/SPI0_SCK/LPTMR0_ALT2/I2S0_RXD0/FB_AD10/CMP0_OUT/FTM0_CH2, direction: INPUT, pull_select: up,
     pull_enable: enable}
-  - {pin_num: '69', peripheral: GPIOB, signal: 'GPIO, 23', pin_signal: PTB23/SPI2_SIN/SPI0_PCS5/FB_AD28, direction: OUTPUT, gpio_init_state: 'true'}
-  - {pin_num: '72', peripheral: GPIOC, signal: 'GPIO, 2', pin_signal: ADC0_SE4b/CMP1_IN0/PTC2/SPI0_PCS2/UART1_CTS_b/FTM0_CH1/FB_AD12/I2S0_TX_FS, direction: OUTPUT,
-    gpio_init_state: 'true'}
+  - {pin_num: '69', peripheral: GPIOB, signal: 'GPIO, 23', pin_signal: PTB23/SPI2_SIN/SPI0_PCS5/FB_AD28, identifier: LED_B, direction: OUTPUT, gpio_init_state: 'true'}
+  - {pin_num: '72', peripheral: GPIOC, signal: 'GPIO, 2', pin_signal: ADC0_SE4b/CMP1_IN0/PTC2/SPI0_PCS2/UART1_CTS_b/FTM0_CH1/FB_AD12/I2S0_TX_FS, identifier: LED_G,
+    direction: OUTPUT, gpio_init_state: 'true'}
   - {pin_num: '73', peripheral: GPIOC, signal: 'GPIO, 3', pin_signal: CMP1_IN1/PTC3/LLWU_P7/SPI0_PCS1/UART1_RX/FTM0_CH2/CLKOUT/I2S0_TX_BCLK, direction: OUTPUT, gpio_init_state: 'true'}
   - {pin_num: '76', peripheral: GPIOC, signal: 'GPIO, 4', pin_signal: PTC4/LLWU_P8/SPI0_PCS0/UART1_TX/FTM0_CH3/FB_AD11/CMP1_OUT, direction: INPUT}
   - {pin_num: '93', peripheral: GPIOD, signal: 'GPIO, 0', pin_signal: PTD0/LLWU_P12/SPI0_PCS0/UART2_RTS_b/FTM3_CH0/FB_ALE/FB_CS1_b/FB_TS_b, identifier: SW1_EXT, direction: INPUT,
@@ -240,12 +240,12 @@ void BOARD_InitPins(void)
     /* Initialize GPIO functionality on pin PTB20 (pin 66)  */
     GPIO_PinInit(BOARD_BUZZER_GPIO, BOARD_BUZZER_PIN, &BUZZER_config);
 
-    gpio_pin_config_t LED_G_config = {
+    gpio_pin_config_t LED_B_config = {
         .pinDirection = kGPIO_DigitalOutput,
         .outputLogic = 1U
     };
     /* Initialize GPIO functionality on pin PTB23 (pin 69)  */
-    GPIO_PinInit(BOARD_LED_G_GPIO, BOARD_LED_G_PIN, &LED_G_config);
+    GPIO_PinInit(BOARD_LED_B_GPIO, BOARD_LED_B_PIN, &LED_B_config);
 
     gpio_pin_config_t ENC_B_config = {
         .pinDirection = kGPIO_DigitalInput,
@@ -261,12 +261,12 @@ void BOARD_InitPins(void)
     /* Initialize GPIO functionality on pin PTC1 (pin 71)  */
     GPIO_PinInit(BOARD_ENC_SW_GPIO, BOARD_ENC_SW_PIN, &ENC_SW_config);
 
-    gpio_pin_config_t LED_B_config = {
+    gpio_pin_config_t LED_G_config = {
         .pinDirection = kGPIO_DigitalOutput,
         .outputLogic = 1U
     };
     /* Initialize GPIO functionality on pin PTC2 (pin 72)  */
-    GPIO_PinInit(BOARD_LED_B_GPIO, BOARD_LED_B_PIN, &LED_B_config);
+    GPIO_PinInit(BOARD_LED_G_GPIO, BOARD_LED_G_PIN, &LED_G_config);
 
     gpio_pin_config_t LED_R_config = {
         .pinDirection = kGPIO_DigitalOutput,
@@ -394,7 +394,7 @@ void BOARD_InitPins(void)
     PORT_SetPinMux(BOARD_BUZZER_PORT, BOARD_BUZZER_PIN, kPORT_MuxAsGpio);
 
     /* PORTB23 (pin 69) is configured as PTB23 */
-    PORT_SetPinMux(BOARD_LED_G_PORT, BOARD_LED_G_PIN, kPORT_MuxAsGpio);
+    PORT_SetPinMux(BOARD_LED_B_PORT, BOARD_LED_B_PIN, kPORT_MuxAsGpio);
 
     /* PORTB3 (pin 56) is configured as PTB3 */
     PORT_SetPinMux(BOARD_DB6_PORT, BOARD_DB6_PIN, kPORT_MuxAsGpio);
@@ -428,7 +428,7 @@ void BOARD_InitPins(void)
     PORT_SetPinMux(BOARD_D_E_PORT, BOARD_D_E_PIN, kPORT_MuxAsGpio);
 
     /* PORTC2 (pin 72) is configured as PTC2 */
-    PORT_SetPinMux(BOARD_LED_B_PORT, BOARD_LED_B_PIN, kPORT_MuxAsGpio);
+    PORT_SetPinMux(BOARD_LED_G_PORT, BOARD_LED_G_PIN, kPORT_MuxAsGpio);
 
     /* PORTC3 (pin 73) is configured as PTC3 */
     PORT_SetPinMux(BOARD_LED_R_PORT, BOARD_LED_R_PIN, kPORT_MuxAsGpio);

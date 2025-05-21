@@ -120,26 +120,26 @@ void BOARD_InitBootPins(void);
   @{ */
 
 /* Symbols to be used with GPIO driver */
-#define BOARD_LED_G_GPIO GPIOB                /*!<@brief GPIO peripheral base pointer */
-#define BOARD_LED_G_GPIO_PIN_MASK (1U << 23U) /*!<@brief GPIO pin mask */
+#define BOARD_LED_B_GPIO GPIOB                /*!<@brief GPIO peripheral base pointer */
+#define BOARD_LED_B_GPIO_PIN_MASK (1U << 23U) /*!<@brief GPIO pin mask */
 
 /* Symbols to be used with PORT driver */
-#define BOARD_LED_G_PORT PORTB                /*!<@brief PORT peripheral base pointer */
-#define BOARD_LED_G_PIN 23U                   /*!<@brief PORT pin number */
-#define BOARD_LED_G_PIN_MASK (1U << 23U)      /*!<@brief PORT pin mask */
+#define BOARD_LED_B_PORT PORTB                /*!<@brief PORT peripheral base pointer */
+#define BOARD_LED_B_PIN 23U                   /*!<@brief PORT pin number */
+#define BOARD_LED_B_PIN_MASK (1U << 23U)      /*!<@brief PORT pin mask */
                                               /* @} */
 
 /*! @name PORTC2 (number 72), J1[14]
   @{ */
 
 /* Symbols to be used with GPIO driver */
-#define BOARD_LED_B_GPIO GPIOC               /*!<@brief GPIO peripheral base pointer */
-#define BOARD_LED_B_GPIO_PIN_MASK (1U << 2U) /*!<@brief GPIO pin mask */
+#define BOARD_LED_G_GPIO GPIOC               /*!<@brief GPIO peripheral base pointer */
+#define BOARD_LED_G_GPIO_PIN_MASK (1U << 2U) /*!<@brief GPIO pin mask */
 
 /* Symbols to be used with PORT driver */
-#define BOARD_LED_B_PORT PORTC               /*!<@brief PORT peripheral base pointer */
-#define BOARD_LED_B_PIN 2U                   /*!<@brief PORT pin number */
-#define BOARD_LED_B_PIN_MASK (1U << 2U)      /*!<@brief PORT pin mask */
+#define BOARD_LED_G_PORT PORTC               /*!<@brief PORT peripheral base pointer */
+#define BOARD_LED_G_PIN 2U                   /*!<@brief PORT pin number */
+#define BOARD_LED_G_PIN_MASK (1U << 2U)      /*!<@brief PORT pin mask */
                                              /* @} */
 
 /*! @name PORTC3 (number 73), J1[16]
