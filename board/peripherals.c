@@ -420,7 +420,7 @@ void BOARD_InitPeripherals(void)
   GPIOA_init();
   GPIOC_init();
   I2C0_init();
-//   PIT_init();
+  PIT_init();
   RTC_init();
   UART0_init();
   ADC0_init();
