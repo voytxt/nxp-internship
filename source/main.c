@@ -1,11 +1,3 @@
-/*
- * Copyright (c) 2013 - 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
- * All rights reserved.
- *
- * SPDX-License-Identifier: BSD-3-Clause
- */
-
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "pin_mux.h"
@@ -13,7 +5,7 @@
 #include "board.h"
 #include "peripherals.h"
 #include "lcd.h"
-
+#include "enc.h"
 
 void setLed(int r, int g, int b) {
 	GPIO_PinWrite(BOARD_LED_R_GPIO, BOARD_LED_R_PIN, r);
@@ -21,37 +13,35 @@ void setLed(int r, int g, int b) {
 	GPIO_PinWrite(BOARD_LED_B_GPIO, BOARD_LED_B_PIN, b);
 }
 
-void disp() {
-	static char ch = 32; // space
-	static int prev_enc_a = 1;
-	static int prev_enc_b = 1;
+char ch = 32; // space
+int pos = 3;
 
-	// a = 0 if rotating, 1 if still
-	// b = 0 if moving & closer to CCW step, 1 if moving & closer to CW step or if still
-	int enc_a = GPIO_PinRead(BOARD_ENC_A_GPIO, BOARD_ENC_A_PIN);
-	int enc_b = GPIO_PinRead(BOARD_ENC_B_GPIO, BOARD_ENC_B_PIN);
+void update() {
+	int enc_state = get_enc_state();
 
-	if (prev_enc_a == 0 && enc_a == 1) { // have we _just_ finished moving?
-		int dir = prev_enc_b;
+	if (enc_state) {
+		ch += enc_state;
+
+		lcd_goto(0, pos);
+		lcd_putc(ch);
+
+		// todo: do this in one string in some smart idiomatic C way
 
 		lcd_goto(1, 0);
+		lcd_puts("                ");
 
-		ch += prev_enc_b ? 1 : -1;
-		lcd_putc(ch);
+		lcd_goto(1, pos);
+		lcd_putc('^');
 	}
-
-	prev_enc_a = enc_a;
-	prev_enc_b = enc_b;
 }
 
 void PIT_CHANNEL_0_IRQHANDLER(void) {
-  uint32_t intStatus;
   /* Reading all interrupt flags of status register */
-  intStatus = PIT_GetStatusFlags(PIT_PERIPHERAL, PIT_CHANNEL_0);
+  uint32_t intStatus = PIT_GetStatusFlags(PIT_PERIPHERAL, PIT_CHANNEL_0);
   PIT_ClearStatusFlags(PIT_PERIPHERAL, PIT_CHANNEL_0, intStatus);
 
   /* Place your code here */
-  disp();
+  update();
 
   /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F
      Store immediate overlapping exception return operation might vector to incorrect interrupt. */
@@ -61,24 +51,14 @@ void PIT_CHANNEL_0_IRQHANDLER(void) {
 }
 
 int main(void) {
-//    char ch;
-
     BOARD_InitBootPins();
     BOARD_InitBootClocks();
     BOARD_InitBootPeripherals();
     BOARD_InitDebugConsole();
-
+    lcd_init();
     PRINTF("init done\n");
 
-    lcd_init();
-
-    lcd_goto(0, 0);
-    lcd_puts("cba");
-    lcd_goto(1, 0);
-    lcd_puts("");
-
     long long t = 0;
-
 
     while (1) {
 //    	if (t % 10000 == 0 && !(enc_a && enc_b)) PRINTF("%d | %d\n", enc_a, enc_b);
