@@ -1,10 +1,12 @@
 #include "pin_mux.h"
 #include "peripherals.h"
-#include "fsl_debug_console.h"
 
 int prev = 0;
 
-int get_bt_state() {
+/**
+ * @return 0 if no button was just pressed, otherwise 1, 2, 3, 4 corresponding to N, E, W, S
+ */
+int get_bt_state(void) {
 	int curr = 0;
 
 	if (!GPIO_PinRead(BOARD_BT_N_GPIO, BOARD_BT_N_PIN)) curr = 1;
@@ -12,15 +14,6 @@ int get_bt_state() {
 	else if (!GPIO_PinRead(BOARD_BT_W_GPIO, BOARD_BT_W_PIN)) curr = 3;
 	else if (!GPIO_PinRead(BOARD_BT_S_GPIO, BOARD_BT_S_PIN)) curr = 4;
 
-//	PRINTF("%d - %d\n", prev, curr);
-
 	if (curr == prev) return 0;
-
-	prev = curr;
-	return curr;
-
-//	static uint16_t debounce  = 0xFFFF;
-//	debounce <<= 1;
-//	if (stiskle) debounce |= 0x0001;
-//	if (debounce == 0x8000);
+	return prev = curr;
 }

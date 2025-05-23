@@ -1,1 +1,1 @@
-int get_enc_state();
+int get_enc_state(void);

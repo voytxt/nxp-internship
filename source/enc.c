@@ -11,7 +11,7 @@ int prev_b = 1;
 /**
  * @return 0 if nothing notable happen, 1 if encoder just got rotated CW, -1 if CCW
  */
-int get_enc_state() {
+int get_enc_state(void) {
 	int a = GPIO_PinRead(BOARD_ENC_A_GPIO, BOARD_ENC_A_PIN);
 	int b = GPIO_PinRead(BOARD_ENC_B_GPIO, BOARD_ENC_B_PIN);
 

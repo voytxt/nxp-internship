@@ -1,1 +1,1 @@
-int get_bt_state();
+int get_bt_state(void);
