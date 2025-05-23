@@ -126,3 +126,29 @@ void lcd_goto(uint8_t row, uint8_t col)
     uint8_t addr = row_addr[row] + col;
     lcd_send(0x80 | addr, false);
 }
+
+int caret_pos = 0;
+
+int lcd_get_caret_pos() {
+	return caret_pos;
+}
+
+void lcd_update_caret() {
+	// todo: do this in one string in some smart idiomatic C way
+
+	lcd_goto(1, 0);
+	lcd_puts("                ");
+
+	lcd_goto(1, caret_pos);
+	lcd_putc('^');
+}
+
+void lcd_move_caret(int dx) {
+	caret_pos = (caret_pos + dx + 16) % 16;
+	lcd_update_caret();
+}
+
+void lcd_putc_at_caret(char ch) {
+	lcd_goto(0, caret_pos);
+	lcd_putc(ch);
+}

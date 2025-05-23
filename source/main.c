@@ -6,32 +6,28 @@
 #include "peripherals.h"
 #include "lcd.h"
 #include "enc.h"
+#include "bt.h"
 
-void setLed(int r, int g, int b) {
+void set_led(int r, int g, int b) {
 	GPIO_PinWrite(BOARD_LED_R_GPIO, BOARD_LED_R_PIN, r);
 	GPIO_PinWrite(BOARD_LED_G_GPIO, BOARD_LED_G_PIN, g);
 	GPIO_PinWrite(BOARD_LED_B_GPIO, BOARD_LED_B_PIN, b);
 }
 
-char ch = 32; // space
-int pos = 3;
+char secret[] = "CHESS";
+
+char ch = 'A';
+
 
 void update() {
 	int enc_state = get_enc_state();
 
 	if (enc_state) {
 		ch += enc_state;
+		if (ch > 'Z') ch = 'A';
+		else if (ch < 'A') ch = 'Z';
 
-		lcd_goto(0, pos);
-		lcd_putc(ch);
-
-		// todo: do this in one string in some smart idiomatic C way
-
-		lcd_goto(1, 0);
-		lcd_puts("                ");
-
-		lcd_goto(1, pos);
-		lcd_putc('^');
+		lcd_putc_at_caret(ch);
 	}
 }
 
@@ -61,10 +57,16 @@ int main(void) {
     long long t = 0;
 
     while (1) {
-//    	if (t % 10000 == 0 && !(enc_a && enc_b)) PRINTF("%d | %d\n", enc_a, enc_b);
+    	int bt_state = get_bt_state();
+
+    	if (bt_state == 2) lcd_move_caret(1);
+    	else if (bt_state == 3) lcd_move_caret(-1);
 
     	if (t % 100000 == 0) {
     		t = 0;
+
+    		PRINTF("BT: %d\n", get_bt_state());
+
 //    		PRINTF("!");
     	}
 
@@ -74,11 +76,11 @@ int main(void) {
 //			int b = GPIO_PinRead(BOARD_SW2_EXT_GPIO, BOARD_SW2_EXT_PIN);
 //			int c = GPIO_PinRead(BOARD_SW3_EXT_GPIO, BOARD_SW3_EXT_PIN);
 //
-//			setLed(a, b, c);
+//			set_led(a, b, c);
 //    	} else {
-//    		setLed(1, 1, 1);
+//    		set_led(1, 1, 1);
 //    	}
-    	setLed(0, 0, 0);
+    	set_led(0, 0, 0);
 
     	t++;
 
