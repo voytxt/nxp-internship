@@ -101,3 +101,8 @@ void lcd_putc_at_caret(char ch) {
 	lcd_goto(0, caret_pos);
 	lcd_putc(ch);
 }
+
+void lcd_clear(void) {
+	lcd_send(0x01, false);
+	lcd_delay_us(2000);
+}

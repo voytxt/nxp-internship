@@ -20,3 +20,5 @@ done mostly on the issued laptop (Latitude 5420 with the i5-1145G7 & 16 GB RAM) 
 - wanted to explain GitHub to us without actually stuff beforehand, and even if that resulted in greated student participation, it also made us run into a ton of issues (thanks GitHub Desktop... for nothing)
 
 - was very, _very_, fast at "explaining", or more accurately, explained stuff in a way, that only made sense if you already knew about it, which doesn't really benefit anyone; i would love if he tried to clarify things (especially the HW related things!) in an ELI5 way, rather than in a "what's up fellow PhD. coworker" way
+
+- the comapny lectures were very informative and felt kinda advanced for us, but i loved 

@@ -348,17 +348,17 @@ instance:
       - enable_custom_name: 'false'
     - adc16_channels_config:
       - 0:
-        - channelName: ''
+        - channelName: 'TEMP'
         - enableDifferentialConversion: 'false'
-        - channelNumber: 'SE.1'
+        - channelNumber: 'SE.26'
         - enableInterruptOnConversionCompleted: 'false'
         - channelGroup: '0'
-        - initializeChannel: 'false'
+        - initializeChannel: 'true'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 adc16_channel_config_t ADC0_channelsConfig[1] = {
   {
-    .channelNumber = 1U,
+    .channelNumber = 26U,
     .enableDifferentialConversion = false,
     .enableInterruptOnConversionCompleted = false,
   }
@@ -384,6 +384,8 @@ static void ADC0_init(void) {
   ADC16_EnableHardwareTrigger(ADC0_PERIPHERAL, false);
   /* Configure channel multiplexing mode */
   ADC16_SetChannelMuxMode(ADC0_PERIPHERAL, ADC0_muxMode);
+  /* Initialize channel */
+  ADC16_SetChannelConfig(ADC0_PERIPHERAL, ADC0_CH0_CONTROL_GROUP, &ADC0_channelsConfig[0]);
 }
 
 /***********************************************************************************************************************

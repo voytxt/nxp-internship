@@ -27,3 +27,19 @@ int get_enc_state(void) {
 
 	return dir;
 }
+
+int prev_sw = 0;
+
+int get_enc_sw_state(void) {
+	int sw = !GPIO_PinRead(BOARD_ENC_SW_GPIO, BOARD_ENC_SW_PIN);
+
+	int state = 0;
+
+	if (prev_sw == 0 && sw == 1) {
+		state = 1;
+	}
+
+	prev_sw = sw;
+
+	return state;
+}

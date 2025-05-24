@@ -67,11 +67,13 @@ extern "C" {
 #define UART0_CLOCK_SOURCE CLOCK_GetFreq(UART0_CLK_SRC)
 /* Alias for ADC0 peripheral */
 #define ADC0_PERIPHERAL ADC0
+/* Definition of custom name for ADC0 configuration #0 (channel 26, control group 0) */
+#define ADC0_TEMP 0U
 /* ADC0 interrupt vector ID (number). */
 #define ADC0_IRQN ADC0_IRQn
 /* ADC0 interrupt handler identifier. */
 #define ADC0_IRQHANDLER ADC0_IRQHandler
-/* Channel 0 (SE.1) conversion control group. */
+/* Channel 0 (SE.26) conversion control group. */
 #define ADC0_CH0_CONTROL_GROUP 0
 
 /***********************************************************************************************************************
