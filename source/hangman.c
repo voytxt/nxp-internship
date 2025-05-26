@@ -2,16 +2,12 @@
 #include "lcd.h"
 #include "fsl_debug_console.h"
 
-char secret[] = "CHESS";
+char secret[16] = "";
 char ch_guess = 'A';
 int tries = 0;
 
 char* new_hangman_secret(void) {
 	strcpy(secret, "BATTLE");
-	return secret;
-}
-
-char* get_hangman_secret(void) {
 	return secret;
 }
 
@@ -22,8 +18,6 @@ void hangman_init(void) {
 	for (char *ch = new_hangman_secret(); *ch; *ch++) {
 		lcd_putc('_');
 	}
-
-	lcd_goto(1, 0);
 }
 
 /**
@@ -37,20 +31,18 @@ void hangman_change_guess(int dch) {
 
 	lcd_goto(1, 15);
 	lcd_putc(ch_guess);
-//	lcd_putc_at_caret(ch_guess);
 }
 
 void hangman_confirm_guess(void) {
-	char *ch = secret;
-	for (int i = 0; *ch; *ch++, i++) {
-		PRINTF("guess %c | ch %c\n", ch_guess, *ch);
-		if (*ch == ch_guess) {
-			PRINTF("GOT %c\n", *ch);
+	for (int i = 0; secret[i]; i++) {
+		if (secret[i] == ch_guess) {
 			lcd_goto(0, i);
-			lcd_putc(*ch);
+			lcd_putc(secret[i]);
 		}
 	}
 
-	lcd_goto(0, 15);
-	lcd_putc(++tries + 48);
+	tries++;
+	lcd_goto(0, 14);
+	lcd_putc(tries / 10 + 48);
+	lcd_putc((tries % 10) + 48);
 }
