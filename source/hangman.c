@@ -1,4 +1,6 @@
 #include <string.h>
+#include <time.h>
+#include <stdlib.h>
 #include "lcd.h"
 #include "fsl_debug_console.h"
 
@@ -7,17 +9,23 @@ char ch_guess = 'A';
 int tries = 0;
 
 char* new_hangman_secret(void) {
-	strcpy(secret, "BATTLE");
+	const char *words[] = {"CHESS", "BATTLE", "TIME", "PERSON", "YEAR", "THING", "WORLD", "WOMAN", "WORK", "GROUP"};
+	strcpy(secret, words[rand() % 10]);
+
 	return secret;
 }
 
 void hangman_init(void) {
+	tries = 0;
+
 	lcd_clear();
 	lcd_goto(0, 0);
 
 	for (char *ch = new_hangman_secret(); *ch; *ch++) {
 		lcd_putc('_');
 	}
+
+	srand(time(NULL));
 }
 
 /**
