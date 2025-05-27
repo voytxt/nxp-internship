@@ -1,5 +1,6 @@
 #include "lcd.h"
 #include "hangman.h"
+#include "typing.h"
 
 /**
  * 0 = start
@@ -18,7 +19,8 @@ int game_get_state(void) {
 void game_set_state(int new_state) {
 	if (new_state == 1) {
 		hangman_init();
-	} else if (new_state == 2) {
+	}
+	else if (new_state == 2) {
 		typing_init();
 	}
 
