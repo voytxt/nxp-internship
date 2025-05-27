@@ -15,7 +15,6 @@ int get_state(void) {
 }
 
 void set_state(int new_state) {
-	// hangman
 	if (new_state == 1) {
 		hangman_init();
 	}

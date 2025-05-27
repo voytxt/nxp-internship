@@ -10,6 +10,7 @@
 #include "temp.h"
 #include "state.h"
 #include "hangman.h"
+#include "rand.h"
 
 void set_led(int r, int g, int b) {
 	GPIO_PinWrite(BOARD_LED_R_GPIO, BOARD_LED_R_PIN, r);
@@ -86,6 +87,8 @@ int main(void) {
 			break;
 		}
 		}
+
+		rand_bump();
 	}
 
 	return 0;
