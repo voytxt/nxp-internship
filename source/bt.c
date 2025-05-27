@@ -6,7 +6,7 @@ int prev = 0;
 /**
  * @return 0 if no button was just pressed, otherwise 1, 2, 3, 4 corresponding to N, E, W, S
  */
-int get_bt_state(void) {
+int bt_get_state(void) {
 	int curr = 0;
 
 	if (!GPIO_PinRead(BOARD_BT_N_GPIO, BOARD_BT_N_PIN)) curr = 1;

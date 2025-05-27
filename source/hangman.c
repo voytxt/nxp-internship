@@ -6,7 +6,7 @@ char *secret = "";
 char ch_guess = 'A';
 int tries = 0;
 
-char* new_hangman_secret() {
+char* hangman_new_secret() {
 	return secret = rand_get_word();
 }
 
@@ -43,7 +43,7 @@ void hangman_init(void) {
 	lcd_clear();
 	lcd_goto(0, 0);
 
-	for (char *ch = new_hangman_secret(); *ch; *ch++) {
+	for (char *ch = hangman_new_secret(); *ch; *ch++) {
 		lcd_putc('_');
 	}
 

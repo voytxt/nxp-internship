@@ -1,3 +1,4 @@
+#include "game.h"
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "pin_mux.h"
@@ -8,36 +9,20 @@
 #include "enc.h"
 #include "bt.h"
 #include "temp.h"
-#include "state.h"
 #include "hangman.h"
 #include "rand.h"
-
-void set_led(int r, int g, int b) {
-	GPIO_PinWrite(BOARD_LED_R_GPIO, BOARD_LED_R_PIN, r);
-	GPIO_PinWrite(BOARD_LED_G_GPIO, BOARD_LED_G_PIN, g);
-	GPIO_PinWrite(BOARD_LED_B_GPIO, BOARD_LED_B_PIN, b);
-}
-
-void update_enc() {
-	if (get_state() == 1) {
-		int enc_state = get_enc_state();
-		if (enc_state) hangman_change_guess(enc_state);
-	}
-}
+#include "led.h"
 
 void PIT_CHANNEL_0_IRQHANDLER(void) {
-	/* Reading all interrupt flags of status register */
+	// read all interrupt flags of status register
 	uint32_t intStatus = PIT_GetStatusFlags(PIT_PERIPHERAL, PIT_CHANNEL_0);
 	PIT_ClearStatusFlags(PIT_PERIPHERAL, PIT_CHANNEL_0, intStatus);
 
-	/* Code to run every millisecond */
-	update_enc();
-
-	/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F
-	 Store immediate overlapping exception return operation might vector to incorrect interrupt. */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-	__DSB();
-#endif
+	// run every millisecond
+	if (game_get_state() == 1) {
+		int enc_state = enc_get_state();
+		if (enc_state) hangman_change_guess(enc_state);
+	}
 }
 
 int main(void) {
@@ -57,19 +42,19 @@ int main(void) {
 	long long t = 0;
 
 	while (1) {
-		int bt_state = get_bt_state();
-		if (bt_state == 1) set_state(1);
+		int bt_state = bt_get_state();
+		if (bt_state == 1) game_set_state(1);
 
-		switch (get_state()) {
+		switch (game_get_state()) {
 
 		case 1: {
-			if (get_enc_sw_state()) hangman_confirm_guess();
+			if (enc_sw_get_state()) hangman_confirm_guess();
 
 			break;
 		}
 
 		case 69: {
-			int bt_state = get_bt_state();
+			int bt_state = bt_get_state();
 
 			if (bt_state == 2) lcd_move_caret(1);
 			else if (bt_state == 3) lcd_move_caret(-1);
@@ -77,7 +62,7 @@ int main(void) {
 			if (t % 100000 == 0) {
 				t = 0;
 
-				PRINTF("BT: %d\n", get_bt_state());
+				PRINTF("BT: %d\n", bt_get_state());
 
 				get_temp_state();
 			}

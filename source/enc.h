@@ -1,2 +1,2 @@
-int get_enc_state(void);
-int get_enc_sw_state(void);
+int enc_get_state(void);
+int enc_sw_get_state(void);
