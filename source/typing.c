@@ -1,16 +1,26 @@
 #include "lcd.h"
 #include "fsl_debug_console.h"
+#include "rand.h"
 
-int NUMBER_OF_WORDS = 3;
+int NUMBER_OF_WORDS = 5;
 int ch_current = 'A';
 int typ_pos = 0;
 
-char *words = "AAA BBB CCCC";
+char words[17] = "";
 
 void typing_new_words(void) {
-	for (int i = 0; i < NUMBER_OF_WORDS; i++) {
+	char w[100] = "";
 
+	for (int i = 0; i < NUMBER_OF_WORDS; i++) {
+		if (i != 0) strcat(w, " ");
+		strcat(w, rand_get_word());
 	}
+
+	for (int i = 0; i < 16; i++) {
+		words[i] = w[i];
+	}
+
+	words[16] = '\0';
 }
 
 void typing_init(void) {
@@ -18,13 +28,13 @@ void typing_init(void) {
 	typing_new_words();
 
 	lcd_goto(0, 0);
-	for (char *ch = words; *ch; *ch++) {
+	for (int i = 0; words[i] && i < 16; i++) {
 		lcd_putc('_');
 	}
 
 	lcd_goto(1, 0);
-	for (char *ch = words; *ch; *ch++) {
-		lcd_putc(*ch);
+	for (int i = 0; words[i] && i < 16; i++) {
+		lcd_putc(words[i]);
 	}
 
 	typ_pos = 0;

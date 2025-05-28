@@ -6,8 +6,6 @@
  * 0 = start
  * 1 = hangman
  * 2 = typing
- * todo hádačka slov based on blinking led
- * todo worlde
  */
 int state = 0;
 
