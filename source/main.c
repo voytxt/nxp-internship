@@ -69,24 +69,6 @@ int main(void) {
 			break;
 		}
 
-		case 69: {
-			int bt_state = bt_get_state();
-
-			if (bt_state == 2) lcd_move_caret(1);
-			else if (bt_state == 3) lcd_move_caret(-1);
-
-			if (t % 100000 == 0) {
-				t = 0;
-
-				PRINTF("BT: %d\n", bt_get_state());
-
-				get_temp_state();
-			}
-
-			t++;
-
-			break;
-		}
 		}
 
 		rand_bump();
