@@ -1,6 +1,7 @@
 #include "lcd.h"
 #include "fsl_debug_console.h"
 #include "rand.h"
+#include "led.h"
 
 int NUMBER_OF_WORDS = 5;
 int ch_current = 'A';
@@ -63,6 +64,7 @@ void typing_confirm_letter(void) {
 		lcd_clear();
 		lcd_goto(0, 0);
 		lcd_puts("u win");
+		set_led(1, 1, 1);
 	} else {
 		typing_change_letter(0);
 	}
