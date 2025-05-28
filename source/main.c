@@ -65,7 +65,7 @@ int main(void) {
 		}
 
 		case 2: {
-//			if (enc_sw_get_state()) hangman_confirm_guess();
+			if (enc_sw_get_state()) typing_confirm_letter();
 			break;
 		}
 

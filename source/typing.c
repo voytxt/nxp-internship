@@ -8,9 +8,9 @@ int typ_pos = 0;
 char *words = "AAA BBB CCCC";
 
 void typing_new_words(void) {
-//	for (int i = 0; i < NUMBER_OF_WORDS; i++) {
-//
-//	}
+	for (int i = 0; i < NUMBER_OF_WORDS; i++) {
+
+	}
 }
 
 void typing_init(void) {
@@ -26,6 +26,8 @@ void typing_init(void) {
 	for (char *ch = words; *ch; *ch++) {
 		lcd_putc(*ch);
 	}
+
+	typ_pos = 0;
 }
 
 /**
@@ -37,12 +39,21 @@ void typing_change_letter(int dch) {
 	if (ch_current > 'Z') ch_current = 'A';
 	else if (ch_current < 'A') ch_current = 'Z';
 
-	lcd_goto(1, 0);
+	lcd_goto(0, typ_pos);
 	lcd_putc(ch_current);
 }
 
 void typing_confirm_letter(void) {
-	if (ch_current == words[typ_pos]) {
-		typ_pos ++;
+	PRINTF("T: %d\n", typ_pos);
+
+	if (ch_current == words[typ_pos]) typ_pos++;
+	if (words[typ_pos] == ' ') typ_pos++;
+
+	if (!words[typ_pos]) {
+		lcd_clear();
+		lcd_goto(0, 0);
+		lcd_puts("u win");
+	} else {
+		typing_change_letter(0);
 	}
 }
